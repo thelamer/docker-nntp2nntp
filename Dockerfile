@@ -1,4 +1,4 @@
-FROM lsiobase/alpine:3.5
+FROM lsiobase/alpine:3.7
 MAINTAINER sparklyballs
 
 # set version label
