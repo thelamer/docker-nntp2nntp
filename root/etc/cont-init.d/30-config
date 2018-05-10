@@ -1,0 +1,26 @@
+
+#!/usr/bin/with-contenv bash
+
+# Test for stale pid file and delete if found
+[[ -f /config/pid/nntp2nntp.pid ]] && \
+        rm /config/pid/nntp2nntp.pid
+
+# Test for log directory and create if not found
+if [ ! -d "/config/log/" ]; then
+  mkdir -p /config/log/
+fi
+
+# Test for pid directory and create if not found
+if [ ! -d "/config/pid/" ]; then
+  mkdir -p /config/pid/
+fi
+
+# Check if config exists in /config, copy if not
+[[ ! -e /config/nntp2nntp.conf ]] && \
+        cp /defaults/nntp2nntp.conf /config/nntp2nntp.conf
+
+# permissions
+chown abc:abc -R \
+        /config
+chmod u+rw \
+        /config/nntp2nntp.conf
