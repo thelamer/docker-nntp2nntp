@@ -34,3 +34,6 @@ RUN \
  rm -rf \
 	/root/.cache \
 	/tmp/*
+
+# add local files
+COPY root/ /
