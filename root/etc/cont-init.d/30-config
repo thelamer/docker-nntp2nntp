@@ -21,3 +21,7 @@ chown abc:abc -R \
         /config
 chmod u+rw \
         /config/nntp2nntp.conf
+
+# nntp2nntp cannot run in the foreground which means we cannot use services.d without constantly spawning duplicate processes
+# as a working compromise we launch the daemon from here at the cost of no service monitoring
+s6-setuidgid abc /usr/bin/nntp2nntp.py /config/nntp2nntp.conf
