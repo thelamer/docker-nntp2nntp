@@ -1,26 +1,22 @@
 #!/usr/bin/with-contenv bash
 
+#make our folders and links
+mkdir -p \
+        /config/{pid} \
+        
 # Test for stale pid file and delete if found
 [[ -f /config/pid/nntp2nntp.pid ]] && \
-  rm /config/pid/nntp2nntp.pid
+        rm /config/pid/nntp2nntp.pid
 
-# Test for log directory and create if not found
-[[ ! -d /config/log/ ]] && \
-  mkdir -p /config/log/
-
-# Test for pid directory and create if not found
-[[ ! -d /config/pid/ ]] && \
-  mkdir -p /config/pid
-
-# Check if config exists in /config, copy if not
+# Check if config exists in /config, copy if not
 [[ ! -e /config/nntp2nntp.conf ]] && \
-  cp /defaults/nntp2nntp.conf /config/nntp2nntp.conf
+        cp /defaults/nntp2nntp.conf /config/nntp2nntp.conf
 
-# permissions
-chown abc:abc -R \
-        /config
+# permissions
+chown -R abc:abc \
+         /config
 chmod u+rw \
-        /config/nntp2nntp.conf
+/config/nntp2nntp.conf
 
 # nntp2nntp cannot run in the foreground which means we cannot use services.d without constantly spawning duplicate processes
 # as a working compromise we launch the daemon from here at the cost of no service monitoring
