@@ -1,4 +1,4 @@
-FROM lsiobase/alpine:3.5
+FROM lsiobase/alpine:3.7
 MAINTAINER sparklyballs
 
 # set version label
@@ -34,3 +34,10 @@ RUN \
  rm -rf \
 	/root/.cache \
 	/tmp/*
+
+# add local files
+COPY root/ /
+
+# ports and volumes
+EXPOSE 1563
+VOLUME /config

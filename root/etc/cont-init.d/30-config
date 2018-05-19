@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bash
+
+#make our folders and links
+mkdir -p \
+        /config/{pid} \
+        
+# Test for stale pid file and delete if found
+[[ -f /config/pid/nntp2nntp.pid ]] && \
+        rm /config/pid/nntp2nntp.pid
+
+# Check if config exists in /config, copy if not
+[[ ! -e /config/nntp2nntp.conf ]] && \
+        cp /defaults/nntp2nntp.conf /config/nntp2nntp.conf
+
+# permissions
+chown -R abc:abc \
+         /config
+chmod u+rw \
+/config/nntp2nntp.conf
+
+# nntp2nntp cannot run in the foreground which means we cannot use services.d without constantly spawning duplicate processes
+# as a working compromise we launch the daemon from here at the cost of no service monitoring
+s6-setuidgid abc /usr/bin/nntp2nntp.py /config/nntp2nntp.conf
