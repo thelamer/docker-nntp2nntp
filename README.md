@@ -123,7 +123,11 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 
 Edit sample config file `config/nntp2nntp.conf` with upstream provider details and rename the local users.
 
-New user passwords can be created by running the password hash generator with `docker exec -it nntp2nntp /usr/bin/nntp2nntp.py pass`, entering the desired password and copying the resulting string to the relevant user line in `/config/nntp2nntp.conf`
+New user passwords can be created by running the password hash generator
+```
+docker exec -it nntp2nntp /usr/bin/nntp2nntp.py pass
+```
+entering the desired password and copying the resulting string to the relevant user line in `/config/nntp2nntp.conf`
 
 Example with a user called `Dave` and with a password of `password`
 ```
