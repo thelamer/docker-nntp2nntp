@@ -1,12 +1,19 @@
 #!/usr/bin/with-contenv bash
 
-#make our folders and links
-mkdir -p \
-        /config/{pid} \
-        
+# create keys
+[[ ! -e /config/keys/certificate.pem ]] && \
+        openssl req -x509 -nodes -days 3650 \
+        -newkey rsa:2048 -keyout /config/keys/private-key.pem  -out /config/keys/certificate.pem \
+        -subj "/CN=nntp2nntp"
+
+# Create subfolder
+[[ ! -d /config/logs ]] && \
+        mkdir -p \
+        /config/logs
+
 # Test for stale pid file and delete if found
-[[ -f /config/pid/nntp2nntp.pid ]] && \
-        rm /config/pid/nntp2nntp.pid
+[[ -f /config/logs/nntp2nntp.pid ]] && \
+        rm /config/logs/nntp2nntp.pid
 
 # Check if config exists in /config, copy if not
 [[ ! -e /config/nntp2nntp.conf ]] && \
@@ -14,7 +21,7 @@ mkdir -p \
 
 # permissions
 chown -R abc:abc \
-         /config
+        /config
 chmod u+rw \
 /config/nntp2nntp.conf
 
