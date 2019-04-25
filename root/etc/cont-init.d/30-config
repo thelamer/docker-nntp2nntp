@@ -1,6 +1,10 @@
 #!/usr/bin/with-contenv bash
 
 # create keys
+[[ ! -d /config/keys ]] && \
+        mkdir -p \
+        /config/keys
+
 [[ ! -e /config/keys/certificate.pem ]] && \
         openssl req -x509 -nodes -days 3650 \
         -newkey rsa:2048 -keyout /config/keys/private-key.pem  -out /config/keys/certificate.pem \
